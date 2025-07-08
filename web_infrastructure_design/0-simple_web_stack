@@ -1,0 +1,36 @@
+User (browser)
+    -> (requests www.foobar.com)
+DNS server (resolves www.foobar.com to IP 8.8.8.8)
+     -> (connects)
+Single Server (IP 8.8.8.8)
+	-> Nginx (Web Server)
+ 	-> Application Server (e.g., Node.js, PHP-FPM)
+ 	-> Application Files (codebase)
+	-> MySQL Database
+
+wht is a server => A server is a physical or virtual machine that provides services or resources to other computers (clients) over a network.
+
+What is the role of the domain name =>  The domain name (foobar.com) is a human-friendly name that users type into their browsers
+					It is translated by DNS into the servers IP address (8.8.8.8) so computers know where to send the requests
+
+What type of DNS record www is in www.foobar.com => The www is a CNAME (Canonical Name) record or an A record pointing to the IP address of the server (In this case, it's an A record pointing to 8.8.8.8.)
+
+What is the role of the web server => The web server (Nginx) handles incoming HTTP/HTTPS requests.
+
+What is the role of the application server => The application server runs backend code, processes business logic, and generates dynamic content to send back to the client.
+
+What is the role of the database => The database (MySQL) stores, retrieves, and manages persistent data like user info, posts, products, etc.
+
+
+What is the server using to communicate with the user requesting the website => The server communicates over the HTTP (or HTTPS) protocol via TCP/IP.
+
+Issues with this infrastructure
+
+Single Point of Failure (SPOF):
+Only one server , if it fails, the whole website is down.
+
+Downtime during maintenance:
+Deploying new code or restarting the web server causes temporary outages.
+
+Scalability:
+This single server cant handle very high traffic; it can become overloaded.
