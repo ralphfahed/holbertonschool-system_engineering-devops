@@ -1,0 +1,52 @@
+User (browser)
+ (requests https://www.foobar.com)
+DNS server (resolves www.foobar.com,  Load Balancer IP)
+
+Firewall 1 (protects Load Balancer)
+
+Load Balancer (HAProxy with SSL certificate)
+
+Firewall 2 (protects Server 1)
+
+Server 1 (Web Server + App Server + DB Primary)
+
+Firewall 3 (protects Server 2)
+
+Server 2 (Web Server + App Server + DB Replica)
+
+Monitoring clients on each server collect logs and metrics and send them to a central monitoring service (e.g., Sumologic).
+
+Explanation
+
+Additional Elements and Why
+
+Firewalls (3): Protect the load balancer and each server by filtering network traffic and blocking unauthorized access.
+
+SSL Certificate: Encrypts traffic between users and the load balancer to enable secure HTTPS connections.
+
+Monitoring Clients: Installed on each server to collect logs and performance data, sending this info to a centralized monitoring service for health checks and alerts.
+
+What are Firewalls For?
+Firewalls filter network traffic based on security policies, preventing unauthorized or malicious access.
+
+Why Serve Traffic Over HTTPS?
+HTTPS encrypts communication between clients and servers to secure sensitive data during transmission.
+
+What Is Monitoring Used For?
+Monitoring tracks system health, performance, and security to detect and respond to problems early.
+
+How Does the Monitoring Tool Collect Data?
+Monitoring clients gather logs and metrics locally and forward them to remote services like Sumologic for aggregation and analysis.
+
+How to Monitor Web Server QPS (Queries Per Second)
+Configure logging or monitoring tools to count HTTP requests over time and visualize these metrics with dashboards and alerts.
+
+Issues with This Infrastructure
+
+SSL Termination at Load Balancer: Traffic between load balancer and backend servers is unencrypted, risking exposure inside the network.
+
+Single Write-Capable MySQL Server: The primary database is a single point of failure for writes; downtime halts write operations.
+
+All Servers Running All Components: Combining web, app, and database servers causes resource contention, complicates scaling and fault isolation.
+
+

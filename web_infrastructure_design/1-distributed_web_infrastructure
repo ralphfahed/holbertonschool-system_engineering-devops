@@ -1,0 +1,69 @@
+User (browser)
+     (requests www.foobar.com)
+DNS server (resolves www.foobar.com  Load Balancer IP)
+
+Load Balancer (HAProxy)
+     Server 1 (IP1)
+         Nginx (Web Server)
+         Application Server
+         Application Files
+         MySQL Primary Database (Master)
+     Server 2 (IP2)
+          Nginx (Web Server)
+          Application Server
+          Application Files
+          MySQL Replica Database (Slave)
+Explanation
+Why add these additional elements?
+Load Balancer (HAProxy):
+Distributes incoming traffic across the two servers to improve performance and availability.
+
+Multiple Servers:
+Allow the system to handle more users by sharing the workload and improving fault tolerance.
+
+Database Primary-Replica Setup:
+Improves database availability and scalability by having one Primary for writes and one or more Replicas for reads.
+
+Load Balancer Distribution Algorithm
+Configured to use Round Robin:
+Requests are sent sequentially to each server in turn, balancing load evenly.
+
+Other options exist (least connections, IP hash), but round robin is simple and effective for equal servers.
+
+Active-Active vs Active-Passive Load Balancer
+Active-Active:
+Both servers actively handle traffic simultaneously (our setup). Higher availability and better resource use.
+
+Active-Passive:
+One server handles traffic while the other stays on standby to take over if the first fails.
+
+Database Primary-Replica Cluster
+Primary (Master): Handles all write operations (INSERT, UPDATE, DELETE).
+
+Replica (Slave): Receives data asynchronously from Primary and handles read operations (SELECT), reducing Primary load.
+
+If Primary fails, Replica can be promoted to Primary to maintain availability (requires manual or automatic failover setup).
+
+Difference between Primary and Replica for the application
+The application writes data only to the Primary database.
+
+The application reads data from the Replicas to improve performance and scalability.
+
+Issues with this infrastructure
+SPOF:
+
+Load balancer itself is a single point of failure.
+
+Primary database failure can cause downtime if failover is not automated.
+
+Security issues:
+
+No firewall means exposed services.
+
+No HTTPS means unencrypted traffic, vulnerable to interception.
+
+No monitoring:
+
+No system to detect failures, performance issues, or attacks.
+
+

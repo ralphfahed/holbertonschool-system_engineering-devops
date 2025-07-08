@@ -1,0 +1,17 @@
+Description
+This project sets up a web infrastructure with separated components and high availability:
+
+1 load balancer cluster using HAProxy for distributing traffic and redundancy.
+
+1 dedicated web server to handle HTTP requests.
+
+1 dedicated application server to process business logic.
+
+1 dedicated database server for data storage.
+
+Why These Elements?
+Load Balancer Cluster: Ensures traffic is evenly distributed and avoids single point of failure at the entry point.
+
+Separated Servers: Improves performance, security, and scalability by isolating web, app, and database roles.
+
+High Availability: Load balancer clustering adds fault tolerance so if one load balancer fails, the other takes over.
